@@ -1,5 +1,13 @@
 package br.com.beganinha.cm;
 
+/**
+ * Para configurar o JUnit, use:
+ * 1 - clicar no projeto > propriedades (Alt+enter)
+ * 2 - Java Build Path > Libraries
+ * 3 - Selectionar Classpath e depois, clicar em Add Library
+ * 4 - Selecione JUnit (Next) e a última versão > Finish
+ * 
+ */
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
