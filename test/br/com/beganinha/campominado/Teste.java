@@ -1,4 +1,4 @@
-package br.com.beganinha.cm;
+package br.com.beganinha.campominado;
 
 /**
  * Para configurar o JUnit, use:

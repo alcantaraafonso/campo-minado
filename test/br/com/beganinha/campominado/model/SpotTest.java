@@ -1,27 +1,32 @@
-package br.com.beganinha.cm.model;
+package br.com.beganinha.campominado.model;
 
+
+/**
+ * O Java permite que se use o nível de restrição de acesso default 
+ * se a classe de teste seguir a mesma nomenclatura de pacote da classe a ser testada
+ */
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import br.com.beganinha.campominado.model.Field;
+import br.com.beganinha.campominado.model.Spot;
 
-class FieldTest {
+class SpotTest {
 	
-	private Field field;
+	private Spot field;
 
 	/*
 	 * Será executado antes de cada teste
 	 */
 	@BeforeEach
 	void inicializeField() {
-		field = new Field(3, 3);
+		field = new Spot(3, 3);
 	}
 	
 	@Test
 	void testNeighborDistancedByOneOnTheLeft() {
-		Field neighbor = new Field(3, 2);
+		Spot neighbor = new Spot(3, 2);
 		boolean result = field.addNeighbor(neighbor);
 		
 		assertTrue(result);
@@ -30,7 +35,7 @@ class FieldTest {
 	
 	@Test
 	void testNeighborDistancedByOneOnTheRight() {
-		Field neighbor = new Field(3, 4);
+		Spot neighbor = new Spot(3, 4);
 		boolean result = field.addNeighbor(neighbor);
 		
 		assertTrue(result);
@@ -38,7 +43,7 @@ class FieldTest {
 	
 	@Test
 	void testNeighborDistancedByOneAbove() {
-		Field neighbor = new Field(2, 3);
+		Spot neighbor = new Spot(2, 3);
 		boolean result = field.addNeighbor(neighbor);
 		
 		assertTrue(result);
@@ -46,7 +51,7 @@ class FieldTest {
 	
 	@Test
 	void testNeighborDistancedByOneBelow() {
-		Field neighbor = new Field(4, 3);
+		Spot neighbor = new Spot(4, 3);
 		boolean result = field.addNeighbor(neighbor);
 		
 		assertTrue(result);
@@ -54,7 +59,7 @@ class FieldTest {
 	
 	@Test
 	void testNeighborDiagonal() {
-		Field neighbor = new Field(2, 2);
+		Spot neighbor = new Spot(2, 2);
 		boolean result = field.addNeighbor(neighbor);
 		
 		assertTrue(result);
@@ -62,7 +67,7 @@ class FieldTest {
 	
 	@Test
 	void testNonNeighbor() {
-		Field neighbor = new Field(1, 1);
+		Spot neighbor = new Spot(1, 1);
 		boolean result = field.addNeighbor(neighbor);
 		
 		assertFalse(result);
