@@ -7,9 +7,9 @@ import br.com.beganinha.campominado.exception.ExplosionException;
 
 public class Spot {
 	
-	private boolean isMined = false;
-	private boolean isOpened = false;
-	private boolean isMarked = false;
+	private boolean mined = false;
+	private boolean opened = false;
+	private boolean marked = false;
 	private List<Spot> neighbors = new ArrayList<>();
 	
 	private final int line;
@@ -41,19 +41,24 @@ public class Spot {
 		return false;
 	}
 	
-	void chanceSpotMark() {
-		if (!isOpened)
-			isMarked = !isMarked;
+	void switchSpotMark() {
+		if (!opened)
+			marked = !marked;
+	}
+	
+	void mineTheSpot() {
+		if (!mined)
+			mined = true;
 	}
 	
 	boolean openSpot() {
 		//só abre se não estiver aberto e não estiver marcado
-		if (!isOpened && !isMarked) {
+		if (!opened && !marked) {
 			//marca como true
-			isOpened = true;
+			opened = true;
 			
 			//Lança exception caso esteja minado
-			if (isMined) {
+			if (mined) {
 				throw new ExplosionException();
 			}
 			
@@ -76,6 +81,50 @@ public class Spot {
 	
 	boolean safeNeighborhood() {
 		return neighbors.stream()
-				.noneMatch(n -> n.isMined);
+				.noneMatch(n -> n.mined);
+	}
+	
+	public boolean isMarked() {
+		return marked;
+	}
+
+	public boolean isOpended() {
+		return opened;
+	}
+	
+	public boolean isClosed() {
+		return !isOpended();
+	}
+
+	public int getLine() {
+		return line;
+	}
+
+
+	public int getColumn() {
+		return column;
+	}
+	
+	boolean goalAccomplished() {
+		boolean unraveled = !mined && opened;
+		boolean protectedSpot = mined && marked;
+		
+		return unraveled || protectedSpot;
+	}
+	
+	long minesInTheNeighborhood() {
+		return neighbors.stream()
+				.filter(n -> n.mined)
+				.count();
+	}
+	
+	void restart() {
+		opened = false;
+		mined = false;
+		marked = false;
+	}
+	
+	public String toString() {
+		return "";
 	}
 }
