@@ -112,13 +112,13 @@ class SpotTest {
 	@Test
 	void testOpenMinedAndMakedSpot() {
 		spot.switchSpotMark();
-		spot.mineTheSpot();
+		spot.putMineInTheSpot();
 		assertFalse(spot.openSpot());
 	}
 	
 	@Test
 	void testOpenMinedAndNotMakedSpot() {
-		spot.mineTheSpot();
+		spot.putMineInTheSpot();
 		assertThrows(ExplosionException.class, () -> {
 			spot.openSpot();
 		});
@@ -141,7 +141,7 @@ class SpotTest {
 	void testOpenSpotWithNeighbors2() {
 		Spot neighbor11 = new Spot(1, 1);
 		Spot neighbor12 = new Spot(1, 2);
-		neighbor12.mineTheSpot();
+		neighbor12.putMineInTheSpot();
 		
 		Spot neighbor22 = new Spot(2, 2);
 		neighbor22.addNeighbor(neighbor11);

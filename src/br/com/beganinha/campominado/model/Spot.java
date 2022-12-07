@@ -46,7 +46,7 @@ public class Spot {
 			marked = !marked;
 	}
 	
-	void mineTheSpot() {
+	void putMineInTheSpot() {
 		if (!mined)
 			mined = true;
 	}
@@ -95,6 +95,10 @@ public class Spot {
 	public boolean isClosed() {
 		return !isOpended();
 	}
+	
+	public boolean isMined() {
+		return mined;
+	}
 
 	public int getLine() {
 		return line;
@@ -125,6 +129,17 @@ public class Spot {
 	}
 	
 	public String toString() {
-		return "";
+		if (marked)
+			return "x";
+		else if (opened && mined)
+			return "*";
+		else if (opened && minesInTheNeighborhood() > 0)
+			return Long.toString(minesInTheNeighborhood());
+		else if (opened)
+			return " ";
+		else
+			return "?";
 	}
+		
+	
 }
