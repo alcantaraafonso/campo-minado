@@ -36,19 +36,21 @@ public class Spot {
 		} else if (gap == 2 && diagonal) {
 			neighbors.add(neighbor);
 			return true;			
+		} else { 
+			return false;
 		}
-		
-		return false;
 	}
 	
 	void switchSpotMark() {
-		if (!opened)
+		if (!opened) {
 			marked = !marked;
+		}
 	}
 	
 	void putMineInTheSpot() {
-		if (!mined)
+		if (!mined) {
 			mined = true;
+		}
 	}
 	
 	boolean openSpot() {
@@ -92,6 +94,10 @@ public class Spot {
 		return opened;
 	}
 	
+	void setOpened(boolean opened) {
+		this.opened = opened;
+	}
+	
 	public boolean isClosed() {
 		return !isOpended();
 	}
@@ -103,7 +109,6 @@ public class Spot {
 	public int getLine() {
 		return line;
 	}
-
 
 	public int getColumn() {
 		return column;
@@ -129,16 +134,17 @@ public class Spot {
 	}
 	
 	public String toString() {
-		if (marked)
+		if (marked) { 
 			return "x";
-		else if (opened && mined)
+		} else if (opened && mined) {
 			return "*";
-		else if (opened && minesInTheNeighborhood() > 0)
+		} else if (opened && minesInTheNeighborhood() > 0) { 
 			return Long.toString(minesInTheNeighborhood());
-		else if (opened)
+		} else if (opened) {
 			return " ";
-		else
+		} else {
 			return "?";
+		}
 	}
 		
 	

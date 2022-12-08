@@ -2,6 +2,9 @@ package br.com.beganinha.campominado.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+
+import br.com.beganinha.campominado.exception.ExplosionException;
 
 public class Board {
 	
@@ -11,21 +14,39 @@ public class Board {
 	
 	private final List<Spot> spots = new ArrayList<>();
 
-	public Board(int quantityMines, int lines, int columns) {
-		super();
-		this.quantityMines = quantityMines;
+	public Board(int lines, int columns, int quantityMines) {
 		this.lines = lines;
 		this.columns = columns;
+		this.quantityMines = quantityMines;
 
 		generateSpots();
 		neighborhoodRelationship();
 		putMinesOnBoard();
 	}
+	
+	public void openSpot(int line, int column) {
+		try { 
+			spots.parallelStream()
+				.filter(spot -> spot.getLine() == line && spot.getColumn() == column)
+				.findFirst()
+				.ifPresent(spot -> spot.openSpot());
+		} catch (ExplosionException e) {
+			spots.forEach(s -> s.setOpened(true));
+			throw e;
+		}
+	}
+	
+	public void switchSpotMark(int line, int column) {
+		spots.parallelStream()
+			.filter(spot -> spot.getLine() == line && spot.getColumn() == column)
+			.findFirst()
+			.ifPresent(spot -> spot.switchSpotMark());
+	}
 
 	private void generateSpots() {
-		for (int i = 0; i < lines; i++) {
-			for (int j = 0; j < columns; j++) {
-				spots.add(new Spot(i, j));
+		for (int line = 0; line < lines; line++) {
+			for (int column = 0; column < columns; column++) {
+				spots.add(new Spot(line, column));
 			}
 		}
 		
@@ -45,10 +66,13 @@ public class Board {
 	 * To put mines randomly in the board
 	 */
 	private void putMinesOnBoard() {
-		int armedMine = 0;
+		long armedMine = 0;
+		
+		Predicate<Spot> mined = m -> m.isMined();
+		
 		do {
-			armedMine = (int)spots.stream()
-					.filter(m -> m.isMined())
+			armedMine = spots.stream()
+					.filter(mined)
 					.count();
 			//a operação de multiplicação está entre parênteses para ter preferência sobre
 			//a operação de casting. Sem os parênteses, a operação de casting seria executada antes da 
@@ -71,7 +95,21 @@ public class Board {
 	}
 
 	public String toString() {
-		return "";
+		//Use StringBuilder sempre que houver uma necessidade grande de concactenação
+		StringBuilder sb = new StringBuilder();
+		
+		int i = 0;
+		for (int line = 0; line < lines; line++) {
+			for (int column = 0; column < columns; column++) {
+				sb.append(" ");
+				sb.append(spots.get(i));
+				sb.append(" ");
+				i++;
+			}
+			sb.append("\n");
+		}
+		
+		return sb.toString();
 	}
 	
 }
