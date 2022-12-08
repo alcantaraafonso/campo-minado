@@ -64,7 +64,7 @@ public class BoardConsole {
 					board.switchSpotMark(xy.next(), xy.next());
 			
 			}
-			
+			System.out.println(board.toString());
 			System.out.println("Você ganhou!!!");
 		} catch (ExplosionException e) {
 			System.out.println(board.toString());

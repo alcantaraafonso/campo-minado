@@ -71,15 +71,15 @@ public class Board {
 		Predicate<Spot> mined = m -> m.isMined();
 		
 		do {
-			armedMine = spots.stream()
-					.filter(mined)
-					.count();
 			//a operação de multiplicação está entre parênteses para ter preferência sobre
 			//a operação de casting. Sem os parênteses, a operação de casting seria executada antes da 
 			//multiplicação
 			int random = (int)(Math.random() * spots.size());
 			spots.get(random).putMineInTheSpot();
 			
+			armedMine = spots.stream()
+					.filter(mined)
+					.count();
 		} while(armedMine < quantityMines);
 		
 	}
@@ -98,8 +98,19 @@ public class Board {
 		//Use StringBuilder sempre que houver uma necessidade grande de concactenação
 		StringBuilder sb = new StringBuilder();
 		
+		sb.append("  ");
+		for (int c = 0; c < columns; c++) {
+			sb.append(" ");
+			sb.append(c);
+			sb.append(" ");
+		}
+		
+		sb.append("\n");
+		
 		int i = 0;
 		for (int line = 0; line < lines; line++) {
+			sb.append(line);
+			sb.append(" ");
 			for (int column = 0; column < columns; column++) {
 				sb.append(" ");
 				sb.append(spots.get(i));
